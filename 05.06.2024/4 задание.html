@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fractal</title>
+<style>
+    canvas {
+        border: 1px solid black;
+    }
+</style>
+</head>
+<body>
+<canvas id="fractalCanvas" width="400" height="400"></canvas>
+<button onclick="increaseDepth()">Increase Depth</button>
+<script>
+    const canvas = document.getElementById('fractalCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let depth = 0;
+
+    function drawFractal(depth) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawSquare(100, 100, 200, depth);
+    }
+
+    function drawSquare(x, y, size, depth) {
+        if (depth === 0) {
+            ctx.fillRect(x, y, size, size);
+        } else {
+            const newSize = size / 3;
+            drawSquare(x, y, newSize, depth - 1);
+            drawSquare(x + newSize, y, newSize, depth - 1);
+            drawSquare(x + 2*newSize, y, newSize, depth - 1);
+            drawSquare(x, y + newSize, newSize, depth - 1);
+            drawSquare(x + 2*newSize, y + newSize, newSize, depth - 1);
+            drawSquare(x, y + 2*newSize, newSize, depth - 1);
+            drawSquare(x + newSize, y + 2*newSize, newSize, depth - 1);
+            drawSquare(x + 2*newSize, y + 2*newSize, newSize, depth - 1);
+        }
+    }
+
+    function increaseDepth() {
+        depth++;
+        drawFractal(depth);
+    }
+
+    drawFractal(depth);
+</script>
+</body>
+</html>
